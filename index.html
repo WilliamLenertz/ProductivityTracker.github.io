@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Productivity Tracker</title>
+        <meta charset="utf-8">
+        <meta author="William Lenertz">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="style.css">
+
+        <script type="text/text/javascript">
+        </script>
+    </head>
+
+    <body>
+    <!--Header-->
+    <header class="mainHeader">
+        <li><h1 id="mainTitle" style="color: #6d7993; text-align: center;">Productivity Tracker</h1></li>
+        <nav><ul>
+            <li class="active"><a href="index.html"><h3>Productivity Tracker</h3></a></li>
+            <li class="innactive"><a href="picture-catalog.html"><h3>Picture Catalog</h3></a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!--Main Body-->
+        <div class="mainBody">
+
+            <!--Left Body-->
+            <div class="leftContent">
+                <h1 style="text-align: center;">Enter New Task Info</h1>
+                <div id="userInput">
+                    <fieldset>
+                        <h3>Task Name:</h3>
+                        <input type="text" id="task" placeholder="New Task"><br>
+                        <h3>Due Date:</h3>
+                        <input type="text" id="endDate" placeholder="##/##/####"><br>
+                        <h3>Due Time:</h3>
+                        <input type="text" id="endTime" placeholder="**:**"><br>
+                        <h3>Task Category:</h3>
+                        <ul id="categoryList">
+                            <li><input type="radio" name="taskRadio" value="Homework">Homework</input></li>
+                            <li><input type="radio" name="taskRadio" value="Chore">Chores</input></li>
+                            <li><input type="radio" name="taskRadio" value="Work">Work</input></li>
+                            <li><input type="radio" name="taskRadio" value="Exercise">Exercise</input></li>
+                        </ul>
+                        <button type="button" id="taskButton">Submit Task</button>
+                    </fieldset>
+                </div>
+            </div>
+
+            <!--Right Body-->
+            <div class="rightContent">
+                <h1 style="text-align: center;">Current Tasks</h1>
+                <div id="mainTask">
+                    <div id="taskList">
+                        <ul id="list">
+
+                            //Task items go here
+                            
+                        </ul>
+                    </div>
+                </div>
+
+                <!--Sorting Buttons-->
+                <div class="sortButtons">
+                    <h3>Sort By:</h3>
+                    <ul class="listButtons">
+                        <li><button type="button" id="sortAdd">Date Added</button></li>
+                        <li><button type="button" id="sortDue">Date Due</button></li>
+                        <li><button type="button" id="sortCategory">Category</button></li>
+                        <li><button type="button" id="sortComplete">Completed</button></li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+
+
+        <!--My Scripts-->
+        <script type="text/javascript">
+            var taskDict = []; //Create a task dictionary
+
+            //Functions:
+            function addTask(){
+
+                //Task Name
+                var name = document.getElementById('task');
+                //Task end date
+                var endDate = document.getElementById('endDate');
+                var endTime = document.getElementById('endTime');
+                //Get todays date in same format as end date
+                var date = new Date();
+                var day = date.getDate();
+                var month = date.getMonth()+1;
+                var year = date.getFullYear();
+                //start date
+                date = month + '/' + day + '/' + year;
+
+                //category:
+                var myCategory;
+                var categories = document.getElementsByName('taskRadio');
+                for (var i = 0; i < categories.length; i++) {
+                    if(categories[i].checked){
+                        myCategory = categories[i].value;
+                        break;
+                    }
+                }
+                //Push Task to end of task dictionary
+                taskDict.push(
+                    {
+                        task: name.value,
+                        startdate: date,
+                        endDate: endDate.value,
+                        endTime: endTime.value,
+                        category: myCategory
+                    }
+                );
+                //Add new task to task list:
+                var ul = document.getElementById('list');
+                var li = document.createElement('li');
+                li.appendChild(document.createTextNode("Task: " + name.value  + '\n\n' +
+                                                        "Created: " + date  + '\n\n' +
+                                                        "Due: " + endDate.value + " " + " - " + " " +
+                                                        endTime.value  + '\n\n' +
+                                                        "Category: " + myCategory));
+                ul.appendChild(li);
+            }
+
+            //create eventListeners
+            var taskButton = document.getElementById('taskButton');
+            taskButton.addEventListener('click', addTask, false);
+
+  </script>
+    </body>
+</html>

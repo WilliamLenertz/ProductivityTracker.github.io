@@ -1,0 +1,115 @@
+body{
+    color: #FFF;
+    background-color: #d5d5d5;
+    margin: 0% 0%;
+    padding: inherit;
+    /*Color Scheme
+    Dusty: #96858f
+    Lavendar: #6d7993
+    Overcast: #9099a2
+    Paper: #d5d5d5;
+    */
+    font-family: serif, sans-serif;
+    font-size: 87.5%;
+    line-height: 1.5;
+    text-align: left;
+
+}
+a{
+    text-decoration: none;
+}
+a:link, a:visited{
+    color: #FFFF;
+}
+
+/*Style the Navigation bar*/
+.mainHeader nav{
+    width: 100%;
+    background-color: #96858f;
+    height: auto;
+}
+
+.mainHeader nav ul {
+    list-style: none; /*Gets rid of bullets*/
+    margin: 0 auto;
+}
+.mainHeader nav ul li {
+    display: inline;
+}
+.mainHeader nav a:link, .mainHeader nav a:visited{
+    color: #FFFF;
+    display: inline-block;
+    padding: 0 2%;
+    height: auto;
+}
+#list{
+    list-style: none;
+    display: inline-block;
+}
+/*Give background color to active page and page hovering over*/
+.mainHeader nav a:hover, .mainHeader nav a:active,
+.mainHeader nav .active a:link{
+    background-color: #6d7993;
+}
+/*Give a nice border to the background of nav bar links*/
+.mainHeader nav ul li a{
+    border-radius: 5px;
+}
+
+/*Styling Main Body of Page*/
+.mainBody{
+    width: 100%;
+    margin-top: 2%;
+    margin-left: 3%;
+    margin-right: 3%;
+}
+.leftContent{
+    float: left;
+    width: 30%;
+    background-color: #6d7993;
+}
+.rightContent{
+    width: 60%;
+    margin-left: 2.5%;
+    margin-right: 2.5%;
+    float: left;
+    background-color: #6d7993;
+}
+#userInput{
+    margin: 2% 2%;
+}
+#categoryList{
+    list-style: none;
+}
+#mainTask{
+    padding-top: 1%;
+    margin:0 1%;
+    background-color: #9099a2;
+    border-style: solid;
+
+}
+#list{
+    margin-top: 2%;
+    padding: 2% 2%;
+    list-style: none;
+    display: block;
+}
+#list li{
+    font-size: 140%;
+    margin-bottom: 2%;
+    padding: 3%;
+    text-align: center;
+    white-space: pre;
+    background-color: #96858f;
+}
+.sortButtons{
+    width: auto;
+    text-align: center;
+}
+.listButtons{
+    list-style: none;
+    padding-left: 0%;
+}
+.listButtons li{
+    display: inline-block;
+}
