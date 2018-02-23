@@ -56,7 +56,7 @@ a:link, a:visited{
     border-radius: 5px;
 }
 
-/*Styling Main Body of Page*/
+/*/*--------Just for Productivity Tracker----------*/
 .mainBody{
     width: 100%;
     margin-top: 2%;
@@ -113,3 +113,32 @@ a:link, a:visited{
 .listButtons li{
     display: inline-block;
 }
+
+/*--------Just for Picture Catalog----------*/
+
+/*Main content styling*/
+.mainContent{
+    width: 100%;
+    margin: 2% 16%;
+}
+.mainContent table{
+    /*width: auto;*/
+    margin: 0 auto;
+}
+.mainContent table tr, td, img {
+    border: 2px solid black;
+    background-color: black;
+    float: left;
+}
+/*Make consistent image size. Will crop image if needed*/
+.imgSize {
+    height: 225px;
+    width: 300px;
+    overflow: hidden;
+}
+.imgSize img {
+    height: auto;
+    width: 120%;
+}
+
+/*lightbox styling*/
