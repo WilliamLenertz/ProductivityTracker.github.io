@@ -67,6 +67,9 @@ a:link, a:visited{
     float: left;
     width: 30%;
     background-color: #6d7993;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
 }
 .rightContent{
     width: 60%;
@@ -74,6 +77,9 @@ a:link, a:visited{
     margin-right: 2.5%;
     float: left;
     background-color: #6d7993;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
 }
 #userInput{
     margin: 2% 2%;
@@ -119,7 +125,7 @@ a:link, a:visited{
 /*Main content styling*/
 .mainContent{
     width: 100%;
-    margin: 2% 16%;
+    margin: 0 auto;
 }
 .mainContent table{
     /*width: auto;*/
@@ -130,15 +136,102 @@ a:link, a:visited{
     background-color: black;
     float: left;
 }
-/*Make consistent image size. Will crop image if needed*/
+/*set image container size to constant*/
 .imgSize {
     height: 225px;
     width: 300px;
     overflow: hidden;
 }
+/*set image size to just larger than container*/
 .imgSize img {
     height: auto;
     width: 120%;
 }
 
 /*lightbox styling*/
+
+#lightBox{
+    width: 100%;
+    height: 100%;
+    display: none; /*CHANGE: Will be "none"*/
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 1;
+    /*overflow: auto;*/
+    background-color: #000;
+}
+/*style X in corner of light box*/
+.closeControl{
+    position: absolute;
+    top: 1%;
+    right: 3%;
+    font-size: 24px;
+    cursor: pointer;
+    color: darkgrey;
+
+
+}
+.closeControl:hover{
+    color: white;
+}
+/*style main container of light box*/
+.lightBoxContent{
+    position: relative;
+    height: 70%;
+    width: 75%;
+    overflow: hidden;
+    margin: 2% auto;
+    background-color: #000000;
+}
+.displayImages{
+    display: none;
+}
+/*Style left and right arrows of light box*/
+.arrow{
+    cursor: pointer;
+    position: absolute;
+    color: darkgrey;
+    font-size: 32px;
+    top: 50%;
+}
+.arrow:hover{
+    color: white;
+}
+#leftArrow{
+    left: 5%;
+}
+#rightArrow{
+    right: 5%;
+}
+
+
+/*-----Lightbox Thumbnail*/
+.thumbHolder{
+    width: 95%;
+    margin-left: 2.5%;
+    display: block;
+}
+#thumbnail {
+
+    display: block;
+    overflow-x: scroll;
+    height: 100px;
+    white-space: nowrap;
+
+}
+
+/*set image container size to constant*/
+.thumbElement {
+    height: 100px;
+    width: 150px;
+    overflow: hidden;
+    display: inline-block;
+}
+/*set image size to just larger than container*/
+.thumbElement img {
+    height: auto;
+    width: 120%;
+}
+
+

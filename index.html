@@ -7,14 +7,20 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="style.css">
 
-        <script type="text/text/javascript">
+        <!--jquery date picker-->
+        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        <script>
+            $( function() {
+                $( "#datepicker" ).datepicker();
+            } );
         </script>
     </head>
 
     <body>
     <!--Header-->
     <header class="mainHeader">
-        <li><h1 id="mainTitle" style="color: #6d7993; text-align: center;">Productivity Tracker</h1></li>
+        <h1 id="mainTitle" style="color: #6d7993; text-align: center;">Productivity Tracker</h1>
         <nav><ul>
             <li class="active"><a href="index.html"><h3>Productivity Tracker</h3></a></li>
             <li class="innactive"><a href="picture-catalog.html"><h3>Picture Catalog</h3></a></li>
@@ -32,10 +38,62 @@
                     <fieldset>
                         <h3>Task Name:</h3>
                         <input type="text" id="task" placeholder="New Task"><br>
-                        <h3>Due Date:</h3>
-                        <input type="text" id="endDate" placeholder="##/##/####"><br>
-                        <h3>Due Time:</h3>
-                        <input type="text" id="endTime" placeholder="**:**"><br>
+
+                        <!--Have to have a "datepicker" instead of random user input-->
+
+                        <h3>Date:
+                            <select id="mSelect">
+                                <option value="1">Jan</option>
+                                <option value="2">Feb</option>
+                                <option value="3">March</option>
+                                <option value="4">April</option>
+                                <option value="5">May</option>
+                                <option value="6">June</option>
+                                <option value="7">Juy</option>
+                                <option value="8">Aug</option>
+                                <option value="9">Sept</option>
+                                <option value="10">Oct</option>
+                                <option value="11">Nov</option>
+                                <option value="12">Dec</option>
+                            </select>
+                            /
+                            <select id="dSelect">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                                <option value="11">11</option>
+                                <option value="12">12</option>
+                                <option value="13">13</option>
+                                <option value="14">14</option>
+                                <option value="15">15</option>
+                                <option value="16">16</option>
+                                <option value="17">17</option>
+                                <option value="18">18</option>
+                                <option value="19">19</option>
+                                <option value="20">20</option>
+                                <option value="21">21</option>
+                                <option value="22">22</option>
+                                <option value="23">23</option>
+                                <option value="24">24</option>
+                                <option value="25">25</option>
+                                <option value="26">26</option>
+                                <option value="27">27</option>
+                                <option value="28">28</option>
+                                <option value="29">29</option>
+                                <option value="30">30</option>
+                                <option value="31">31</option>
+                            </select>
+
+
+                        </h3>
+
                         <h3>Task Category:</h3>
                         <ul id="categoryList">
                             <li><input type="radio" name="taskRadio" value="Homework">Homework</input></li>
@@ -55,7 +113,7 @@
                     <div id="taskList">
                         <ul id="list">
 
-                            //Task items go here
+                            <!--Task items go here-->
                             
                         </ul>
                     </div>
@@ -78,16 +136,23 @@
 
         <!--My Scripts-->
         <script type="text/javascript">
-            var taskDict = []; //Create a task dictionary
+
+            //Dictionary to hold all current tasks
+            var taskDict = [];
 
             //Functions:
             function addTask(){
 
                 //Task Name
                 var name = document.getElementById('task');
+
                 //Task end date
-                var endDate = document.getElementById('endDate');
-                var endTime = document.getElementById('endTime');
+                var endMonth = document.getElementById('mSelect').value;
+                var endDay = document.getElementById('dSelect').value;
+                var dueDate = endMonth + "/" + endDay + "/2018";
+
+
+
                 //Get todays date in same format as end date
                 var date = new Date();
                 var day = date.getDate();
@@ -105,30 +170,179 @@
                         break;
                     }
                 }
+
                 //Push Task to end of task dictionary
                 taskDict.push(
                     {
                         task: name.value,
-                        startdate: date,
-                        endDate: endDate.value,
-                        endTime: endTime.value,
+                        startDate: date,
+                        endDate: dueDate,
                         category: myCategory
                     }
                 );
-                //Add new task to task list:
+
+                //Add new task to task list dictionary:
                 var ul = document.getElementById('list');
                 var li = document.createElement('li');
-                li.appendChild(document.createTextNode("Task: " + name.value  + '\n\n' +
-                                                        "Created: " + date  + '\n\n' +
-                                                        "Due: " + endDate.value + " " + " - " + " " +
-                                                        endTime.value  + '\n\n' +
+
+                //****Need a sub ul inside the li, then li's inside that sub ul
+                var subUl = document.createElement('ul');
+                var check = document.createElement('input');
+
+                var compString = document.createTextNode('\n' + "Completed: ");
+
+                check.disabled;
+                check.name = "Completed";
+                check.type = "checkbox";
+                check.id = "complete";
+
+                /*
+                subUl.appendChild(document.createElement('li').appendChild(document.createTextNode("Task: " + name.value)));
+                subUl.appendChild(document.createElement('li').appendChild(document.createTextNode("Created: " + date)));
+                subUl.appendChild(document.createElement('li').appendChild(document.createTextNode("Due: " + dueDate)));
+                subUl.appendChild(document.createElement('li').appendChild(document.createTextNode("Category: " + myCategory)));
+                li.appendChild(subUl);
+                */
+
+                li.appendChild(document.createTextNode("Task: " + name.value + " || " + //+ '\n'
+                                                        "Created: " + date  + " || " +
+                                                        "Due: " + dueDate + " || " +
                                                         "Category: " + myCategory));
+
+
+                li.appendChild(compString);
+                li.appendChild(check);
+
                 ul.appendChild(li);
+            }
+
+            //Sort by Date Added
+            function addSort(){
+                //sort task dictionary
+                taskDict.sort(function (a, b) {
+                    //works for sorting dates
+                    return new Date(a.startDate) - new Date(b.startDate);
+                })
+                //clear task list and re-populate
+                var taskList = document.getElementById('list');
+                while(taskList.firstChild){
+                    taskList.removeChild(taskList.firstChild);
+                }
+
+                //add new tasks in order
+
+                for (var i = 0; i < taskDict.length; i++){
+                    var li = document.createElement('li');
+                    var check = document.createElement('input');
+                    var compString = document.createTextNode('\n' + "Completed: ");
+
+                    check.disabled;
+                    check.type = "checkbox";
+                    check.className = "complete";
+
+                    li.appendChild(document.createTextNode("Task: " + taskDict[i].task + " || Created: " + taskDict[i].startDate + " || Due: " + taskDict[i].endDate + " || Category: " + taskDict[i].category));
+
+
+                    li.appendChild(compString);
+                    li.appendChild(check);
+
+                    taskList.appendChild(li);
+                }
+            }
+
+            //Sort by Due Date
+            function dueSort(){
+                taskDict.sort(function (a, b) {
+                    return new Date(a.endDate) - new Date(b.endDate);
+                })
+                //clear task list and re-populate
+                var taskList = document.getElementById('list');
+                while(taskList.firstChild){
+                    taskList.removeChild(taskList.firstChild);
+                }
+
+                //add new tasks in order
+
+                for (var i = 0; i < taskDict.length; i++){
+                    var li = document.createElement('li');
+                    var check = document.createElement('input');
+                    var compString = document.createTextNode('\n' + "Completed: ");
+
+                    check.disabled;
+                    check.type = "checkbox";
+                    check.className = "complete";
+
+                    li.appendChild(document.createTextNode("Task: " + taskDict[i].task + " || Created: " + taskDict[i].startDate + " || Due: " + taskDict[i].endDate + " || Category: " + taskDict[i].category));
+
+
+                    li.appendChild(compString);
+                    li.appendChild(check);
+
+                    taskList.appendChild(li);
+                }
+            }
+
+            //Sort by Category
+            function catSort(){
+                taskDict.sort(function (a, b) {
+                    if(a.category < b.category){
+                        return -1;
+                    }
+                    if (a.category > b.category){
+                        return 1;
+                    }
+                    return 0;
+                })
+                //clear task list and re-populate
+                var taskList = document.getElementById('list');
+                while(taskList.firstChild){
+                    taskList.removeChild(taskList.firstChild);
+                }
+
+                //add new tasks in order
+
+                for (var i = 0; i < taskDict.length; i++){
+                    var li = document.createElement('li');
+                    var check = document.createElement('input');
+                    var compString = document.createTextNode('\n' + "Completed: ");
+
+                    check.disabled;
+                    check.type = "checkbox";
+                    check.className = "complete";
+
+                    li.appendChild(document.createTextNode("Task: " + taskDict[i].task + " || Created: " + taskDict[i].startDate + " || Due: " + taskDict[i].endDate + " || Category: " + taskDict[i].category));
+
+
+                    li.appendChild(compString);
+                    li.appendChild(check);
+
+                    taskList.appendChild(li);
+                }
+            }
+
+            function compSort() {
+
+
             }
 
             //create eventListeners
             var taskButton = document.getElementById('taskButton');
             taskButton.addEventListener('click', addTask, false);
+
+            var sortAddButton = document.getElementById('sortAdd');
+            sortAddButton.addEventListener('click',addSort, false);
+
+            var sortDueButton = document.getElementById('sortDue');
+            sortDueButton.addEventListener('click',dueSort,false);
+
+            var sortCatButton = document.getElementById('sortCategory');
+            sortCatButton.addEventListener('click',catSort,false);
+
+            var sortCompButton = document.getElementById('sortComplete');
+            sortCompButton.addEventListener('click', compSort, false);
+
+
+
 
   </script>
     </body>
