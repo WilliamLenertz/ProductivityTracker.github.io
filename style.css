@@ -87,6 +87,13 @@ a:link, a:visited{
 #categoryList{
     list-style: none;
 }
+#newCategory{
+    background-color: #d5d5d5;
+    width: 20%;
+    float: right;
+    margin: 2% 3%;
+    padding: 2% 2%;
+}
 #mainTask{
     padding-top: 1%;
     margin:0 1%;

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
         <title>Productivity Tracker</title>
         <meta charset="utf-8">
@@ -7,6 +7,18 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="style.css">
 
+        <!--JQUERY DATE PICKER-->
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+        <link rel="stylesheet" href="/resources/demos/style.css">
+        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        <script>
+            $( function() {
+                $( "#datepicker" ).datepicker();
+            } );
+        </script>
+
+        <!--Dynamic Category Styling-->
         <style type="text/css">
             .Homework{
                 background-color: rgb(107, 38, 82);
@@ -48,6 +60,7 @@
 
                         <!--Have to have a "datepicker" instead of random user input-->
 
+                        <!--
                         <h3>Date:
                             <select id="mSelect">
                                 <option value="1">Jan</option>
@@ -97,7 +110,8 @@
                                 <option value="30">30</option>
                                 <option value="31">31</option>
                             </select>
-
+                            -->
+                        <h3>Date: <input type="text" id="datepicker"></h3>
 
                         </h3>
 
@@ -109,7 +123,11 @@
                             <li><input type="radio" name="taskRadio" value="Exercise">Exercise</input></li>
                         </ul>
                         <button type="button" id="taskButton">Submit Task</button>
-                        <button type="button" id="newCategoryButton" onclick="newCategory()">New Category</button>
+                        <div id="newCategory">
+                            <button type="button" id="newCategoryButton" onclick="newCategory()">New Category</button>
+                            <input type="color" id="newCategoryColor" style="visibility: hidden">
+                            <button type="button" id="confirmCategory">Confirm Category</button>
+                        </div>
                     </fieldset>
                 </div>
             </div>
@@ -150,17 +168,33 @@
 
             //Functions:
 
+            //create a new category
             function newCategory(){
                 var categoryList = document.getElementById('categoryList');
                 var newCat = prompt("Enter a New Category");
-                //<li><input type="radio" name="taskRadio" value="Homework">Homework</input></li>
-                var input = document.createElement('input');
-                var li = document.createElement('li');
-                input.type = 'radio';
-                input.name = 'taskRadio';
-                input.value = newCat;
-                li.appendChild(input);
-                categoryList.appendChild(li);
+                document.getElementById('newCategoryColor').style.visibility = 'visible';
+                var newli = document.createElement('li');
+                var node = document.createElement('div');
+                node.innerHTML = '<input type="radio" name="taskRadio" value="' + newCat + '"><label for="check">'+ newCat +'</label>';
+
+                //color for new category
+                var colorPicker = document.getElementById('newCategoryColor');
+
+
+                var confirm = document.getElementById('confirmCategory');
+                confirm.addEventListener('click', function(){
+
+                    var color = colorPicker.value;
+                    var css = document.createElement('div');
+                    css.innerHTML = '<style> .' + newCat + '{background-color: ' + color + ';}</style>';
+                    document.head.appendChild(css);
+
+                    newli.appendChild(node);
+
+                    categoryList.appendChild(newli);
+                    colorPicker.style.visibility = 'hidden';
+
+                }, false);
 
 
             }
@@ -275,7 +309,7 @@
                 taskDict.sort(function (a, b) {
                     //works for sorting dates
                     return new Date(a.startDate) - new Date(b.startDate);
-                })
+                });
                 //clear task list and re-populate
                 var taskList = document.getElementById('list');
                 while(taskList.firstChild){
@@ -316,7 +350,7 @@
             function dueSort(){
                 taskDict.sort(function (a, b) {
                     return new Date(a.endDate) - new Date(b.endDate);
-                })
+                });
                 //clear task list and re-populate
                 var taskList = document.getElementById('list');
                 while(taskList.firstChild){
@@ -362,7 +396,7 @@
                         return 1;
                     }
                     return 0;
-                })
+                });
                 //clear task list and re-populate
                 var taskList = document.getElementById('list');
                 while(taskList.firstChild){
