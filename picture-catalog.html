@@ -207,6 +207,10 @@
         <!--X that appears in upper right corner of lightbox-->
         <span class="closeControl" onclick="closeLightBox()">&times;</span>
 
+        <div id="playButtonContainer">
+            <button class="playButton" onclick="beginPlayInterval()">&#9654;</button>
+            <button class="playButton" onclick="clearInterval(playMode)">&#9646;&#9646;</button>
+        </div>
         <div class="lightBoxContent">
 
             <!--Defines large images in light box (display: none; //by default)-->
@@ -375,34 +379,42 @@
 
         //index of current pic being displayed
         var currIndex;
+        var playMode;
 
         //Initialize light box, display first pic, initialize currIndex
         function initLightBox(picIndex){
 
             currIndex = picIndex;
 
-            //Display the light box
-            document.getElementById('lightBox').style.display = "block";
+            //animated light box
+            document.getElementById('lightBox').style.animationName = 'lightBoxAnimation';
 
             //Get array of all images (default to hiding all of them.
             var images = document.getElementsByClassName('displayImages');
             hideImages(images); //hide all images by default (I.E. no main image displayed)
             currIndex = picIndex;
 
+
             //Display initial selected image on screen
             images[currIndex].style.display = "block";
+
+            //Animate opening next image
+            images[currIndex].style.animation = "animateImageOpen .5s";
 
         }
 
         //Used for X in top right of light box
         function closeLightBox() {
-            document.getElementById('lightBox').style.display = "none";
+            document.getElementById('lightBox').style.animationName = 'lightBoxClose';
         }
 
-        //Hide undisplayed images in light box
+        //Hide all other images in light box
         function hideImages(images){
             for (var i = 0; i < images.length; i++){
+
+                images[i].style.animation = null;
                 images[i].style.display = "none";
+
             }
         }
 
@@ -411,6 +423,10 @@
             //get array of images
             var images = document.getElementsByClassName('displayImages');
 
+            //for setInterval()
+            if(difference == null){
+                difference = 1;
+            }
 
             //wrap currIndex
             currIndex += difference;
@@ -420,11 +436,15 @@
                 currIndex = images.length - 1;
             }
 
+            //Need to animate these
             //hide all other images
             hideImages(images);
+
             //display next image
-            console.log("currIndex: " + currIndex);
             images[currIndex].style.display = "block";
+            //animate opening next image
+            images[currIndex].style.animation = "animateImageOpen .5s";
+
 
 
         }
@@ -434,16 +454,19 @@
             //get array of images
             var images = document.getElementsByClassName('displayImages');
 
-
-            //wrap currIndex
-            currIndex =index;
+            currIndex = index;
 
             //hide all other images
             hideImages(images);
-            //display next image
-            console.log("currIndex: " + currIndex);
-            images[currIndex].style.display = "block";
 
+            //display next image
+            images[currIndex].style.display = "block";
+            images[currIndex].style.animation = "animateImageOpen .5s";
+
+        }
+
+        function beginPlayInterval() {
+            playMode = setInterval(displayNextImage, 5000);
         }
 
     </script>

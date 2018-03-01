@@ -7,14 +7,21 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="style.css">
 
-        <!--jquery date picker-->
-        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-        <script>
-            $( function() {
-                $( "#datepicker" ).datepicker();
-            } );
-        </script>
+        <style type="text/css">
+            .Homework{
+                background-color: rgb(107, 38, 82);
+            }
+            .Chore{
+                background-color: rgb(80, 54, 95);
+            }
+            .Work{
+                background-color: rgb(85, 139, 151);
+            }
+            .Exercise{
+                background-color: rgb(55, 106, 108);
+            }
+
+        </style>
     </head>
 
     <body>
@@ -102,6 +109,7 @@
                             <li><input type="radio" name="taskRadio" value="Exercise">Exercise</input></li>
                         </ul>
                         <button type="button" id="taskButton">Submit Task</button>
+                        <button type="button" id="newCategoryButton" onclick="newCategory()">New Category</button>
                     </fieldset>
                 </div>
             </div>
@@ -141,6 +149,22 @@
             var taskDict = [];
 
             //Functions:
+
+            function newCategory(){
+                var categoryList = document.getElementById('categoryList');
+                var newCat = prompt("Enter a New Category");
+                //<li><input type="radio" name="taskRadio" value="Homework">Homework</input></li>
+                var input = document.createElement('input');
+                var li = document.createElement('li');
+                input.type = 'radio';
+                input.name = 'taskRadio';
+                input.value = newCat;
+                li.appendChild(input);
+                categoryList.appendChild(li);
+
+
+            }
+
             function addTask(){
 
                 //Task Name
@@ -171,49 +195,78 @@
                     }
                 }
 
+                //checkbox for complete/incomplete
+                var check = document.createElement('input');
+                var compString = document.createTextNode('\n' + "Completed: ");
+                check.disabled;
+                check.name = "Completed";
+                check.type = "checkbox";
+                check.id = "completeCheck";
+
+                //optional "delete" button for task
+                var del = document.createElement('input');
+                del.type = 'button';
+                del.value = "Delete Task";
+                del.style.marginLeft = '3%';
+                del.addEventListener('click', removeTask, false); //add event listener for task deletion
+
                 //Push Task to end of task dictionary
                 taskDict.push(
                     {
                         task: name.value,
                         startDate: date,
                         endDate: dueDate,
-                        category: myCategory
+                        category: myCategory,
+                        checkbox: check,
+                        delButton: del
                     }
                 );
 
-                //Add new task to task list dictionary:
+                //Add new task to task list:
                 var ul = document.getElementById('list');
                 var li = document.createElement('li');
+                li.className += myCategory;
 
-                //****Need a sub ul inside the li, then li's inside that sub ul
-                var subUl = document.createElement('ul');
-                var check = document.createElement('input');
 
-                var compString = document.createTextNode('\n' + "Completed: ");
 
-                check.disabled;
-                check.name = "Completed";
-                check.type = "checkbox";
-                check.id = "complete";
 
-                /*
-                subUl.appendChild(document.createElement('li').appendChild(document.createTextNode("Task: " + name.value)));
-                subUl.appendChild(document.createElement('li').appendChild(document.createTextNode("Created: " + date)));
-                subUl.appendChild(document.createElement('li').appendChild(document.createTextNode("Due: " + dueDate)));
-                subUl.appendChild(document.createElement('li').appendChild(document.createTextNode("Category: " + myCategory)));
-                li.appendChild(subUl);
-                */
 
-                li.appendChild(document.createTextNode("Task: " + name.value + " || " + //+ '\n'
-                                                        "Created: " + date  + " || " +
-                                                        "Due: " + dueDate + " || " +
+                li.appendChild(document.createTextNode("Task: " + name.value + "\n" +
+                                                        "Created: " + date  + "\n" +
+                                                        "Due: " + dueDate + "\n" +
                                                         "Category: " + myCategory));
 
 
                 li.appendChild(compString);
                 li.appendChild(check);
-
+                li.appendChild(del);
                 ul.appendChild(li);
+            }
+            //remove a task
+            function removeTask(){
+                var yesDelete = confirm("Confirm Deletion");
+
+
+                //confirm deletion
+                if(yesDelete) {
+                    //get parent of delete button
+                    var li = this.parentNode;
+                    //get parent of li element
+                    var ul = this.parentNode.parentNode;
+                    //list of child nodes for the ul
+                    var children = ul.children;
+                    //remove task from our task dictionary
+                    for (var i = 0; i < children.length; i++) {
+                        if (children[i] == li) {
+                            taskDict.splice(i, 1);
+                        }
+                    }
+                    //remove task from the ul
+                    ul.removeChild(li);
+                } else {
+                    alert("Deletion Cancelled");
+                }
+
             }
 
             //Sort by Date Added
@@ -236,6 +289,13 @@
                     var check = document.createElement('input');
                     var compString = document.createTextNode('\n' + "Completed: ");
 
+                    //optional "delete" button for task
+                    var del = document.createElement('input');
+                    del.type = 'button';
+                    del.value = "Delete Task";
+                    del.style.marginLeft = '3%';
+                    del.addEventListener('click', removeTask, false); //add event listener for task deletion
+
                     check.disabled;
                     check.type = "checkbox";
                     check.className = "complete";
@@ -245,6 +305,8 @@
 
                     li.appendChild(compString);
                     li.appendChild(check);
+                    li.appendChild(del);
+                    li.className = taskDict[i].category;
 
                     taskList.appendChild(li);
                 }
@@ -268,15 +330,23 @@
                     var check = document.createElement('input');
                     var compString = document.createTextNode('\n' + "Completed: ");
 
+                    //optional "delete" button for task
+                    var del = document.createElement('input');
+                    del.type = 'button';
+                    del.value = "Delete Task";
+                    del.style.marginLeft = '3%';
+                    del.addEventListener('click', removeTask, false); //add event listener for task deletion
+
                     check.disabled;
                     check.type = "checkbox";
                     check.className = "complete";
 
                     li.appendChild(document.createTextNode("Task: " + taskDict[i].task + " || Created: " + taskDict[i].startDate + " || Due: " + taskDict[i].endDate + " || Category: " + taskDict[i].category));
 
-
+                    li.className = taskDict[i].category;
                     li.appendChild(compString);
                     li.appendChild(check);
+                    li.appendChild(del);
 
                     taskList.appendChild(li);
                 }
@@ -306,15 +376,23 @@
                     var check = document.createElement('input');
                     var compString = document.createTextNode('\n' + "Completed: ");
 
+                    //optional "delete" button for task
+                    var del = document.createElement('input');
+                    del.type = 'button';
+                    del.value = "Delete Task";
+                    del.style.marginLeft = '3%';
+                    del.addEventListener('click', removeTask, false); //add event listener for task deletion
+
                     check.disabled;
                     check.type = "checkbox";
                     check.className = "complete";
 
                     li.appendChild(document.createTextNode("Task: " + taskDict[i].task + " || Created: " + taskDict[i].startDate + " || Due: " + taskDict[i].endDate + " || Category: " + taskDict[i].category));
 
-
+                    li.className = taskDict[i].category;
                     li.appendChild(compString);
                     li.appendChild(check);
+                    li.appendChild(del);
 
                     taskList.appendChild(li);
                 }
@@ -344,6 +422,6 @@
 
 
 
-  </script>
+        </script>
     </body>
 </html>

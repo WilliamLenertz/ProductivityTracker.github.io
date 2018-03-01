@@ -101,12 +101,13 @@ a:link, a:visited{
     display: block;
 }
 #list li{
+    font-family: Papyrus;
     font-size: 140%;
     margin-bottom: 2%;
+    margin-right: 2%;
     padding: 3%;
     text-align: center;
     white-space: pre;
-    background-color: #96858f;
 }
 .sortButtons{
     width: auto;
@@ -146,22 +147,55 @@ a:link, a:visited{
 .imgSize img {
     height: auto;
     width: 120%;
+    cursor: pointer;
+
+}
+/*lightbox styling*/
+@keyframes lightBoxAnimation {
+    from{visibility: hidden;}
+    to{visibility: visible;}
+    from{opacity: 0;}
+    to{opacity: 1;}
 }
 
-/*lightbox styling*/
+@keyframes lightBoxClose {
+    from{visibility: visible;}
+    to{visibility: hidden;}
+    from{opacity: 1;}
+    to{opacity: 0;}
+}
 
 #lightBox{
     width: 100%;
     height: 100%;
-    display: none; /*CHANGE: Will be "none"*/
+    /*display: none;*/
+    visibility: hidden;
     position: fixed;
     left: 0;
     top: 0;
     z-index: 1;
-    /*overflow: auto;*/
     background-color: #000;
+
+    animation-duration: 1.5s;
+    -webkit-animation-fill-mode: both;
+    -moz-animation-fill-mode: both;
+    -o-animation-fill-mode: both;
+    animation-fill-mode: both;
+
 }
-/*style X in corner of light box*/
+
+#playButtonContainer{
+    height: 30px;
+    margin: 2% 1% 2% 1%;
+    text-align: center;
+}
+.playButton{
+    font-size: 30px;
+    cursor: pointer;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
 .closeControl{
     position: absolute;
     top: 1%;
@@ -184,9 +218,16 @@ a:link, a:visited{
     margin: 2% auto;
     background-color: #000000;
 }
+
+@keyframes animateImageOpen {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+
 .displayImages{
     display: none;
 }
+
 /*Style left and right arrows of light box*/
 .arrow{
     cursor: pointer;
@@ -227,6 +268,7 @@ a:link, a:visited{
     width: 150px;
     overflow: hidden;
     display: inline-block;
+    cursor: pointer;
 }
 /*set image size to just larger than container*/
 .thumbElement img {
@@ -235,3 +277,21 @@ a:link, a:visited{
 }
 
 
+/*******Specialty Styling**********/
+@keyframes imageHover {
+    from {opacity: 1;}
+    to {opacity: .5;}
+    from{transform: scale(1);}
+    to {transform: scale(1.2);}
+}
+
+.imgSize img:hover, .thumbElement img:hover{
+    /*transform: scale(1.2);
+    opacity: .5;*/
+    animation-name: imageHover;
+    animation-duration: .5s;
+    -webkit-animation-fill-mode: both;
+    -moz-animation-fill-mode: both;
+    -o-animation-fill-mode: both;
+    animation-fill-mode: both;
+}
