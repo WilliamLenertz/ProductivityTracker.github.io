@@ -465,9 +465,25 @@
 
         }
 
+        //play button for light box
         function beginPlayInterval() {
             playMode = setInterval(displayNextImage, 5000);
         }
+
+        //key presses for changing picture and escaping light box
+        document.onkeydown = function(e) {
+            switch (e.keyCode) {
+                case 27:
+                    closeLightBox();
+                    break;
+                case 37:
+                    displayNextImage(-1);
+                    break;
+                case 39:
+                    displayNextImage(1);
+                    break;
+            }
+        };
 
     </script>
     </body>

@@ -330,11 +330,9 @@
                     del.style.marginLeft = '3%';
                     del.addEventListener('click', removeTask, false); //add event listener for task deletion
 
-                    check.disabled;
-                    check.type = "checkbox";
-                    check.className = "complete";
+                    check = taskDict[i].checkbox;
 
-                    li.appendChild(document.createTextNode("Task: " + taskDict[i].task + " || Created: " + taskDict[i].startDate + " || Due: " + taskDict[i].endDate + " || Category: " + taskDict[i].category));
+                    li.appendChild(document.createTextNode("Task: " + taskDict[i].task + "\nCreated: " + taskDict[i].startDate + "\nDue: " + taskDict[i].endDate + "\nCategory: " + taskDict[i].category));
 
 
                     li.appendChild(compString);
@@ -371,11 +369,9 @@
                     del.style.marginLeft = '3%';
                     del.addEventListener('click', removeTask, false); //add event listener for task deletion
 
-                    check.disabled;
-                    check.type = "checkbox";
-                    check.className = "complete";
+                    check = taskDict[i].checkbox;
 
-                    li.appendChild(document.createTextNode("Task: " + taskDict[i].task + " || Created: " + taskDict[i].startDate + " || Due: " + taskDict[i].endDate + " || Category: " + taskDict[i].category));
+                    li.appendChild(document.createTextNode("Task: " + taskDict[i].task + "\nCreated: " + taskDict[i].startDate + "\nDue: " + taskDict[i].endDate + "\nCategory: " + taskDict[i].category));
 
                     li.className = taskDict[i].category;
                     li.appendChild(compString);
@@ -417,11 +413,9 @@
                     del.style.marginLeft = '3%';
                     del.addEventListener('click', removeTask, false); //add event listener for task deletion
 
-                    check.disabled;
-                    check.type = "checkbox";
-                    check.className = "complete";
+                    check = taskDict[i].checkbox;
 
-                    li.appendChild(document.createTextNode("Task: " + taskDict[i].task + " || Created: " + taskDict[i].startDate + " || Due: " + taskDict[i].endDate + " || Category: " + taskDict[i].category));
+                    li.appendChild(document.createTextNode("Task: " + taskDict[i].task + "\nCreated: " + taskDict[i].startDate + "\nDue: " + taskDict[i].endDate + "\nCategory: " + taskDict[i].category));
 
                     li.className = taskDict[i].category;
                     li.appendChild(compString);
@@ -433,6 +427,46 @@
             }
 
             function compSort() {
+                taskDict.sort(function(a, b) {
+                    if (a.checkbox.checked && !b.checkbox.checked){
+                        return 1;
+                    }
+                    if (b.checkbox.checked && !a.checkbox.checked){
+                        return -1
+                    }
+                    return 0;
+                });
+                //clear task list and re-populate
+                var taskList = document.getElementById('list');
+                while(taskList.firstChild){
+                    taskList.removeChild(taskList.firstChild);
+                }
+
+                //add new tasks in order
+
+                for (var i = 0; i < taskDict.length; i++){
+                    var li = document.createElement('li');
+                    var check = document.createElement('input');
+                    var compString = document.createTextNode('\n' + "Completed: ");
+
+                    //optional "delete" button for task
+                    var del = document.createElement('input');
+                    del.type = 'button';
+                    del.value = "Delete Task";
+                    del.style.marginLeft = '3%';
+                    del.addEventListener('click', removeTask, false); //add event listener for task deletion
+
+                    check = taskDict[i].checkbox;
+
+                    li.appendChild(document.createTextNode("Task: " + taskDict[i].task + "\nCreated: " + taskDict[i].startDate + "\nDue: " + taskDict[i].endDate + "\nCategory: " + taskDict[i].category));
+
+                    li.className = taskDict[i].category;
+                    li.appendChild(compString);
+                    li.appendChild(check);
+                    li.appendChild(del);
+
+                    taskList.appendChild(li);
+                }
 
 
             }
